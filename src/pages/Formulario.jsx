@@ -9,19 +9,15 @@ export default function LoginPage() {
 
   const onSubmit = (data) => {
     if (data.email.trim() !== "") {
-
       setCustomError("");
-      
       navigate("/home"); // Redirige a la página de inicio de kodigo Music
-      
+
       console.log(data);
+
+
     } else {
       setCustomError("El campo no puede estar vacío.");
     }
-  };
-
-  const formulario = () => {
-    navigate("/Formulario")
   };
 
   return (
@@ -41,52 +37,72 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">Inicia sesión en Kodigo Music</h1>
-        </div>
-
-        <div className="space-y-4 mb-8">
-          <button className="w-full flex items-center justify-center border border-white py-2 rounded-full gap-2 hover:bg-white hover:text-black transition">
-            <img src="/google.svg" alt="Google" className="w-5 h-5" />
-            Continuar con Google
-          </button>
-
-          <button className="w-full flex items-center justify-center border border-white py-2 rounded-full gap-2 hover:bg-white hover:text-black transition">
-            <img src="/facebook.svg" alt="Facebook" className="w-5 h-5" />
-            Continuar con Facebook
-          </button>
-
-          <button className="w-full flex items-center justify-center border border-white py-2 rounded-full gap-2 hover:bg-white hover:text-black transition">
-            <img src="/apple.svg" alt="Apple" className="w-5 h-5" />
-            Continuar con Apple
-          </button>
+          <h1 className="text-3xl font-bold">Suscribete a Kodigo Music</h1>
         </div>
 
         {/* Formulario de correo */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
-              Correo electrónico o nombre de usuario
+              Correo electrónico 
             </label>
             <input
               id="email"
               {...register("email", {
                 required: "Este campo es obligatorio",
               })}
-              placeholder="Correo electrónico o nombre de usuario"
+              placeholder="Correo electrónico"
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+           
+            <label htmlFor="Nombre de usuario" className="block text-sm font-medium mb-1 mt-3">
+              Nombre usuario
+            </label>
+            <input
+              id="NombreUsuario"
+              {...register("NombreUsuario", {
+                required: "Este campo es obligatorio",
+              })}
+              placeholder="Nombre usuario"
+              className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
 
-             <label htmlFor="email" className="block text-sm font-medium mb-1 mt-3">
+             <label htmlFor="contraseña" className="block text-sm font-medium mb-1 mt-3">
               Contraseña
             </label>
             <input
-              id="email"
+              id="contraseña"
               {...register("contraseña", {
                 required: "Este campo es obligatorio",
               })}
               placeholder="Contraseña"
               className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+
+             <label htmlFor="edad" className="block text-sm font-medium mb-1 mt-3">
+              Edad
+            </label>
+            <input
+              id="edad"
+              {...register("edad", {
+                required: "Este campo es obligatorio",
+              })}
+              placeholder="edad"
+              className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
+            <label htmlFor="genero" className="block text-sm font-medium mb-1 mt-3">
+              Genero
+            </label>
+            <input
+              id="genero"
+              {...register("genero", {
+                required: "Este campo es obligatorio",
+              })}
+              placeholder="genero"
+              className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+
 
             {/* Error de validación */}
             {errors.email && (
@@ -108,13 +124,6 @@ export default function LoginPage() {
             Continuar
           </button>
         </form>
-
-        <p className="mt-6 text-center text-sm text-gray-400">
-          ¿No tienes cuenta?{' '}
-          <button onClick={formulario} className="underline text-white hover:text-green-500">
-            Suscríbete a Kodigo Music
-          </button>
-        </p>
       </div>
     </div>
   );
