@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { db} from '../firebase/firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function LoginPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
   const [customError, setCustomError] = useState("");
 
-  const onSubmit = (data) => {
-    if (data.email.trim() !== "") {
+  const onSubmit = async ({ email, password }) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'usuarios'));
+      // Buscar usuario con correo y password iguales
+      const usuarioEncontrado = querySnapshot.docs.find((doc) => {
+        const datos = doc.data();
+        return datos.email === email && datos.password === password;
+      });
+      console.log(usuarioEncontrado);
 
-      setCustomError("");
-      
-      navigate("/home"); // Redirige a la página de inicio de kodigo Music
-      
-      console.log(data);
-    } else {
-      setCustomError("El campo no puede estar vacío.");
+      if (usuarioEncontrado) {
+        alert('✅ Bienvenido');
+        navigate('/home'); // Redirige si estás usando React Router
+      } else {
+        alert('❌ Usuario o contraseña incorrectos');
+      }
+
+      reset();
+    } catch (error) {
+      console.error('Error al buscar usuario:', error);
     }
   };
+  
 
   const formulario = () => {
     navigate("/Formulario")
@@ -68,7 +81,7 @@ export default function LoginPage() {
               Correo electrónico o nombre de usuario
             </label>
             <input
-              id="email"
+              id="1"
               {...register("email", {
                 required: "Este campo es obligatorio",
               })}
@@ -76,12 +89,12 @@ export default function LoginPage() {
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-             <label htmlFor="email" className="block text-sm font-medium mb-1 mt-3">
+             <label htmlFor="password" className="block text-sm font-medium mb-1 mt-3">
               Contraseña
             </label>
             <input
-              id="email"
-              {...register("contraseña", {
+              id="2"
+              {...register("password", {
                 required: "Este campo es obligatorio",
               })}
               placeholder="Contraseña"

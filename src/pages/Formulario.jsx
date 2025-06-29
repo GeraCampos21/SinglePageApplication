@@ -1,24 +1,41 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { db} from '../firebase/firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default function LoginPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors },reset } = useForm();
   const navigate = useNavigate();
   const [customError, setCustomError] = useState("");
 
+  /*
   const onSubmit = (data) => {
     if (data.email.trim() !== "") {
       setCustomError("");
       navigate("/home"); // Redirige a la página de inicio de kodigo Music
-
       console.log(data);
-
-
     } else {
       setCustomError("El campo no puede estar vacío.");
     }
+  };*/
+
+  const onSubmit = async (data) => {
+    try {
+      // Guarda los datos en la colección "usuarios"
+      await addDoc(collection(db, 'usuarios'), data);
+      alert('Datos guardados correctamente ');
+      reset(); // limpia el formulario
+      navigate("/home"); // Redirige a la página de inicio de kodigo Music
+    } catch (error) {
+      console.error('Error al guardar datos:', error);
+    }
   };
+
+  const login = () => {
+    navigate("/")
+  };
+
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
@@ -47,7 +64,7 @@ export default function LoginPage() {
               Correo electrónico 
             </label>
             <input
-              id="email"
+              id="1"
               {...register("email", {
                 required: "Este campo es obligatorio",
               })}
@@ -59,7 +76,7 @@ export default function LoginPage() {
               Nombre usuario
             </label>
             <input
-              id="NombreUsuario"
+              id="2"
               {...register("NombreUsuario", {
                 required: "Este campo es obligatorio",
               })}
@@ -71,8 +88,8 @@ export default function LoginPage() {
               Contraseña
             </label>
             <input
-              id="contraseña"
-              {...register("contraseña", {
+              id="3"
+              {...register("password", {
                 required: "Este campo es obligatorio",
               })}
               placeholder="Contraseña"
@@ -83,7 +100,7 @@ export default function LoginPage() {
               Edad
             </label>
             <input
-              id="edad"
+              id="4"
               {...register("edad", {
                 required: "Este campo es obligatorio",
               })}
@@ -95,14 +112,13 @@ export default function LoginPage() {
               Genero
             </label>
             <input
-              id="genero"
+              id="5"
               {...register("genero", {
                 required: "Este campo es obligatorio",
               })}
               placeholder="genero"
               className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
-
 
             {/* Error de validación */}
             {errors.email && (
@@ -124,6 +140,12 @@ export default function LoginPage() {
             Continuar
           </button>
         </form>
+        <p className="mt-6 text-center text-sm text-gray-400">
+          ¿Ya tienes cuenta?{' '}
+          <button onClick={login} className="underline text-white hover:text-green-500">
+            Inicia sesion con tu cuenta
+          </button>
+        </p>
       </div>
     </div>
   );
