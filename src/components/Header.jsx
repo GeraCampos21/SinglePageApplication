@@ -1,8 +1,33 @@
 // components/Header.jsx
 import { ChevronLeft, ChevronRight, Bell, Users, House, Search, PanelTopOpen   } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext';
+import Swal from "sweetalert2";
 
 export default function Header() {
+   const { logout } = UserAuth(); // funcion para cerrar sesion en el local
+  const navigate = useNavigate();
+  
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: '¿Cerrar sesión?',
+      text: '¿Estás seguro de que deseas salir?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, salir',
+      cancelButtonText: 'Cancelar',
+      background: '#1F1F1F',
+      color: '#fff'
+    });
+
+    if (result.isConfirmed) {
+      logout();
+      navigate('/');
+    }
+  };
+
   return (
     <div className="hidden md:block lg:block w-full px-4 md:px-8 py-2">
       <div className="flex items-center justify-between gap-4">
@@ -40,11 +65,15 @@ export default function Header() {
             <Users className="w-5 h-5 text-white" />
           </button>
           <div className="hidden md:flex items-center space-x-2">
+            <button
+            onClick={handleLogout}
+            >
             <img
               src="https://i.pravatar.cc/40"
               className="rounded-full w-8 h-8"
               alt="User"
             />
+            </button>
           </div>
         </div>
 

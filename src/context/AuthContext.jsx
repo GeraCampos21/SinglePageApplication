@@ -9,18 +9,30 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [homeInicio, setHomeInicio] = useState(false);
-  
+  const [loading, setLoading] = useState(true); //  para evitar redirección antes de saber si está logueado
+
+  useEffect(() => {
+    const logueado = localStorage.getItem("logueado");
+    if (logueado === "true") {
+      setIsAuthenticated(true);
+      setHomeInicio(true);
+    }
+    setLoading(false); //  ya cargó
+  }, []);
   //Esto es del formulario para crear cuenta
   async function saveForm(data) {
 
     try {
       // Guarda los datos en la colección "usuarios"
       await addDoc(collection(db, 'usuarios'), data);
+
+
     } catch (error) {
       console.error('Error al guardar datos:', error);
     }
 
   }
+
 
   //esto es del loginPage, para loguearse
   async function loginPass({ email, password }) {
@@ -33,9 +45,9 @@ export function AuthProvider({ children }) {
       });
 
       if (usuarioEncontrado) {
-        console.log("true")
         setIsAuthenticated(true);
-        setHomeInicio(true); 
+        setHomeInicio(true);
+        localStorage.setItem("logueado", "true"); // GUARDAR SESIÓN
         Swal.fire({
           title: "welcome to Kodigo Music",
           imageUrl: 'https://www.shutterstock.com/image-photo/latvian-police-man-directing-traffic-260nw-711870832.jpg',
@@ -46,18 +58,23 @@ export function AuthProvider({ children }) {
           color: "#fff",
           confirmButtonColor: "#3f5f95",
         });
-         return true; 
-      }else {
-      return false;
-    }
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
-      console.log("false")
       console.error('Error al buscar usuario:', error);
     }
   }
 
+  function logout() {
+    setIsAuthenticated(false);
+    setHomeInicio(false);
+    localStorage.removeItem("logueado"); // quitar del storage
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, saveForm, loginPass,homeInicio }}>
+    <AuthContext.Provider value={{ isAuthenticated, saveForm, loginPass, homeInicio, loading, logout }}>
       {children}
     </AuthContext.Provider>
 
