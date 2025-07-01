@@ -6,10 +6,11 @@ import Banner from "../components/Banner";
 import Carrusel from "../components/CarrucelMovil";
 import Footer from "../components/FooterMovil";
 import Carousel from "../components/CarouselDesk";
+import FooterPlayer from "../components/FooterDesk";
 
 export default function HomePage() {
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
+    <div className="bg-black text-white min-h-screen flex flex-col ">
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
@@ -20,6 +21,7 @@ export default function HomePage() {
         </main>
       </div>
       <Footer />
+      <FooterPlayer />
     </div>
   );
 }

@@ -1,41 +1,35 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { db} from '../firebase/firebaseConfig';
+import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
+import { UserAuth } from '../context/AuthContext';
+import Swal from "sweetalert2";
+
 
 export default function LoginPage() {
-  const { register, handleSubmit, formState: { errors },reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
   const [customError, setCustomError] = useState("");
-
-  /*
-  const onSubmit = (data) => {
-    if (data.email.trim() !== "") {
-      setCustomError("");
-      navigate("/home"); // Redirige a la página de inicio de kodigo Music
-      console.log(data);
-    } else {
-      setCustomError("El campo no puede estar vacío.");
-    }
-  };*/
+  const { saveForm } = UserAuth()
 
   const onSubmit = async (data) => {
-    try {
-      // Guarda los datos en la colección "usuarios"
-      await addDoc(collection(db, 'usuarios'), data);
-      alert('Datos guardados correctamente ');
-      reset(); // limpia el formulario
-      navigate("/home"); // Redirige a la página de inicio de kodigo Music
-    } catch (error) {
-      console.error('Error al guardar datos:', error);
-    }
+    saveForm(data)
+    Swal.fire({
+      title: "Datos Guardados",
+      imageWidth: 150,
+      imageHeight: 150,
+      draggable: true,
+      background: '#1F1F1F',
+      color: "#fff",
+      confirmButtonColor: "#3f5f95",
+    });
+    navigate("/"); // Redirige a la página de inicio de kodigo Music
   };
 
   const login = () => {
     navigate("/")
   };
-
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
@@ -61,7 +55,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
-              Correo electrónico 
+              Correo electrónico
             </label>
             <input
               id="1"
@@ -71,7 +65,7 @@ export default function LoginPage() {
               placeholder="Correo electrónico"
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
-           
+
             <label htmlFor="Nombre de usuario" className="block text-sm font-medium mb-1 mt-3">
               Nombre usuario
             </label>
@@ -84,7 +78,7 @@ export default function LoginPage() {
               className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-             <label htmlFor="contraseña" className="block text-sm font-medium mb-1 mt-3">
+            <label htmlFor="contraseña" className="block text-sm font-medium mb-1 mt-3">
               Contraseña
             </label>
             <input
@@ -93,30 +87,6 @@ export default function LoginPage() {
                 required: "Este campo es obligatorio",
               })}
               placeholder="Contraseña"
-              className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-             <label htmlFor="edad" className="block text-sm font-medium mb-1 mt-3">
-              Edad
-            </label>
-            <input
-              id="4"
-              {...register("edad", {
-                required: "Este campo es obligatorio",
-              })}
-              placeholder="edad"
-              className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-
-            <label htmlFor="genero" className="block text-sm font-medium mb-1 mt-3">
-              Genero
-            </label>
-            <input
-              id="5"
-              {...register("genero", {
-                required: "Este campo es obligatorio",
-              })}
-              placeholder="genero"
               className="w-full px-4 py-2 bt-3 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 

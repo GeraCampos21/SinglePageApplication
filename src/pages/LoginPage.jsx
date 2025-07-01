@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { db} from '../firebase/firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import { UserAuth } from "../context/AuthContext";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const navigate = useNavigate();
   const [customError, setCustomError] = useState("");
+  const navigate = useNavigate();
+  const { loginPass } = UserAuth()
 
   const onSubmit = async ({ email, password }) => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'usuarios'));
-      // Buscar usuario con correo y password iguales
-      const usuarioEncontrado = querySnapshot.docs.find((doc) => {
-        const datos = doc.data();
-        return datos.email === email && datos.password === password;
+    const success = await loginPass({ email, password });
+
+    if (success) {
+      navigate("/home");
+    } else {
+      Swal.fire({
+        title: "Datos Incorrectos ",
+        imageUrl: 'https://previews.123rf.com/images/prettyvectors/prettyvectors1506/prettyvectors150600134/40848091-policeman-with-stop-sign-vector-flat-illustration.jpg',
+        imageWidth: 150,
+        imageHeight: 150,
+        draggable: true,
+        background: '#1F1F1F',
+        color: "#fff",
+        confirmButtonColor: "#3f5f95",
       });
-      console.log(usuarioEncontrado);
-
-      if (usuarioEncontrado) {
-        alert('✅ Bienvenido');
-        navigate('/home'); // Redirige si estás usando React Router
-      } else {
-        alert('❌ Usuario o contraseña incorrectos');
-      }
-
-      reset();
-    } catch (error) {
-      console.error('Error al buscar usuario:', error);
+      setCustomError("Usuario o contraseña incorrectos.");
+      reset()
+      setTimeout(() => {
+        setCustomError("");
+      }, 3000);
     }
   };
-  
 
   const formulario = () => {
     navigate("/Formulario")
@@ -89,7 +90,7 @@ export default function LoginPage() {
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-             <label htmlFor="password" className="block text-sm font-medium mb-1 mt-3">
+            <label htmlFor="password" className="block text-sm font-medium mb-1 mt-3">
               Contraseña
             </label>
             <input
