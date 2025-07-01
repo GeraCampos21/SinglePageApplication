@@ -1,12 +1,28 @@
-# React + Vite
+# 🎵 Kodigo Music
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Kodigo Music** es una aplicación web inspirada en Spotify, desarrollada como parte de un proyecto académico de Kodigo. La interfaz está construida con **React.js** y **Tailwind CSS**, y proporciona una experiencia de usuario atractiva, responsiva y moderna. El proyecto incluye rutas protegidas, autenticación de usuario con Firebase, navegación fluida y componentes visuales reutilizables.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚛️ **React.js** – Biblioteca principal para la construcción de la interfaz de usuario.
+- 💨 **Tailwind CSS** – Framework de estilos utilitario para un diseño ágil y responsivo.
+- 🌐 **React Router DOM** – Manejo de rutas en el cliente.
+- 🎨 **DaisyUI** – Plugin de componentes preestilizados para Tailwind.
+- 🔔 **SweetAlert2** – Alertas modales amigables para el usuario.
+- 🖌️ **Lucide React** – Íconos modernos y personalizables.
 
-## Expanding the ESLint configuration
+## 📦 Instalación de librerias usadas en el proyecto:
+- npm install react-router-dom
+- npm install daisyui
+- npm install sweetalert2
+- pnpm install lucide-react
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Sigue estos pasos para ejecutar el proyecto localmente:
+
+- npm install
+- npm run dev
+
+
+1. Clona el repositorio:
+   ```bash
+   (https://github.com/GeraCampos21/SinglePageApplication.git)
