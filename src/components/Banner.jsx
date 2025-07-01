@@ -1,12 +1,39 @@
 // components/Banner.jsx
 import { libraryData } from "../data/libraryData";
 import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext';
+import Swal from "sweetalert2";
+
 
 export default function Banner() {
+   const { logout } = UserAuth(); // funcion para cerrar sesion en el local
+    const navigate = useNavigate();
+    
+    const handleLogout = async () => {
+      const result = await Swal.fire({
+        title: '¿Cerrar sesión?',
+        text: '¿Estás seguro de que deseas salir?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar',
+        background: '#1F1F1F',
+        color: '#fff'
+      });
+  
+      if (result.isConfirmed) {
+        logout();
+        navigate('/');
+      }
+    };
+
   return (
     <>
       <div className="hidden lg:block">
-        <div className=" bg-gradient-to-r from-green-900 to-green-700 rounded-lg p-6 flex flex-col md:flex-row items-center md:items-start justify-between text-white shadow-md">
+        <div className=" bg-spotify-green/70 from-green-900 to-green-700 rounded-lg p-6 flex flex-col md:flex-row items-center md:items-start justify-between text-white shadow-md">
 
           {/* Imagen del álbum */}
           <div className="w-40 h-40 min-w-[10rem] mr-6">
@@ -43,7 +70,18 @@ export default function Banner() {
       </div>
 
       {/* Botones del menu para movil y escritorio */}
-      <div className="flex justify-center items-center lg:justify-start  mb-4 px-2  md:px-0 space-x-2 mt-3">
+      <div className="flex justify-start items-center   mb-4 px-2  md:px-0 space-x-2 mt-3">
+        <div className="sm:hidden p-1.5 px-3.5 mt-4">
+            <button
+            onClick={handleLogout}
+            >
+            <img
+              src="https://i.pravatar.cc/40"
+              className="rounded-full "
+              alt="User"
+            />
+            </button>
+          </div>
         <button className=" bg-spotify-lightgray hover:bg-spotify-green rounded-full text-sm p-1.5 px-3.5 mt-3">
           Todas
         </button>
@@ -71,7 +109,7 @@ export default function Banner() {
               alt={item.title}
               className="rounded w-[60px] h-[60px] object-cover"
             />
-            <p className="font-semibold text-sm flex items-center truncate">
+            <p className="font-semibold text-xs flex items-center truncate">
               {item.title}
             </p>
           </div>
