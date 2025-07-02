@@ -50,7 +50,6 @@ export function AuthProvider({ children }) {
         localStorage.setItem("logueado", "true"); // GUARDAR SESIÓN
         Swal.fire({
           title: "welcome to Kodigo Music",
-          imageUrl: 'https://www.shutterstock.com/image-photo/latvian-police-man-directing-traffic-260nw-711870832.jpg',
           imageWidth: 150,
           imageHeight: 150,
           draggable: true,

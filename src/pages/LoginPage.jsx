@@ -18,7 +18,6 @@ export default function LoginPage() {
     } else {
       Swal.fire({
         title: "Datos Incorrectos ",
-        imageUrl: 'https://previews.123rf.com/images/prettyvectors/prettyvectors1506/prettyvectors150600134/40848091-policeman-with-stop-sign-vector-flat-illustration.jpg',
         imageWidth: 150,
         imageHeight: 150,
         draggable: true,
