@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase/firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
 import { UserAuth } from '../context/AuthContext';
 import Swal from "sweetalert2";
 
@@ -17,8 +15,7 @@ export default function LoginPage() {
     saveForm(data)
     Swal.fire({
       title: "Datos Guardados",
-      imageWidth: 150,
-      imageHeight: 150,
+      icon: "success",
       draggable: true,
       background: '#1F1F1F',
       color: "#fff",

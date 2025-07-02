@@ -18,8 +18,7 @@ export default function LoginPage() {
     } else {
       Swal.fire({
         title: "Datos Incorrectos ",
-        imageWidth: 150,
-        imageHeight: 150,
+        icon: 'warning',
         draggable: true,
         background: '#1F1F1F',
         color: "#fff",
@@ -78,14 +77,14 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
-              Correo electrónico o nombre de usuario
+              Correo electrónico
             </label>
             <input
               id="1"
               {...register("email", {
                 required: "Este campo es obligatorio",
               })}
-              placeholder="Correo electrónico o nombre de usuario"
+              placeholder="Correo electrónico"
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 

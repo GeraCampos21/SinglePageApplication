@@ -50,8 +50,7 @@ export function AuthProvider({ children }) {
         localStorage.setItem("logueado", "true"); // GUARDAR SESIÓN
         Swal.fire({
           title: "welcome to Kodigo Music",
-          imageWidth: 150,
-          imageHeight: 150,
+          icon: "success",
           draggable: true,
           background: '#1F1F1F',
           color: "#fff",
